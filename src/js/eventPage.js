@@ -581,7 +581,7 @@ function processActiveTabStatus(tab, callback) {
 //change the icon to either active or inactive
 function updateIcon(status) {
   var icon = status !== 'normal' ? suspensionPausedIcon : suspensionActiveIcon;
-  chrome.browserAction.setIcon({path: icon});
+  chrome.action.setIcon({path: icon});
 }
 
 
