@@ -597,6 +597,30 @@ function messageRequestListener(request, sender, sendResponse) {
     });
     break;
 
+  case 'setOptions':
+    log(['setOptions', request.options]);
+    storage.setOptions(request.options, () => {
+      sendResponse();
+    });
+    break;
+
+  case 'syncOptions':
+    log(['syncOptions', request.options]);
+    storage.syncOptions(request.options, () => {
+      sendResponse();
+    });
+    break;
+
+  case 'dumpStorage':
+    log(['dumpStorage', storage]);
+    sendResponse(storage);
+    break;
+
+  case 'cleanupWhitelist':
+    log(['cleanupWhitelist'])
+    sendResponse({value: storage.cleanupWhitelist(request.value)});
+    break;
+
   case 'requestCurrentTabInfo':
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
       if (tabs.length > 0) {
@@ -675,6 +699,7 @@ function messageRequestListener(request, sender, sendResponse) {
     break;
 
   default:
+    console.error(`Unknown message action: ${request.action}`);
     break;
   }
   return true;
